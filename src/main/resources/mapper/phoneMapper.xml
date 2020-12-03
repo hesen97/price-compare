@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hesen.crawler.dao.PhoneDao">
+    <insert id="insertPhone">
+        insert into tb_phone(sku, image_url, detail_url, title, price, website_id)
+        values(#{sku}, #{imageUrl}, #{detailUrl}, #{title}, #{price}, #{websiteId})
+    </insert>
+
+    <select id="selectPhoneByCriterion" resultType="com.hesen.crawler.entity.Phone">
+        select phone_id, sku, image_url, detail_url, title, price, website_id
+        from tb_phone
+        where price > 800
+        <if test="websiteId != null">
+            and website_id = #{websiteId}
+        </if>
+        <if test="title != null">
+            and match(title) against(#{title});
+        </if>
+    </select>
+
+    <select id="averagePrice" resultType="double">
+        select avg(price)
+        from tb_phone
+        where price > 800
+        <if test="websiteId != null">
+            and website_id = #{websiteId}
+        </if>
+        <if test="title != null">
+            and match(title) against(#{title});
+        </if>
+    </select>
+
+    <select id="maxPrice" resultType="double">
+        select max(price)
+        from tb_phone
+        where price > 800
+        <if test="websiteId != null">
+            and website_id = #{websiteId}
+        </if>
+        <if test="title != null">
+            and match(title) against(#{title});
+        </if>
+    </select>
+
+    <select id="minPrice" resultType="double">
+        select min(price)
+        from tb_phone
+        where price > 800
+        <if test="websiteId != null">
+            and website_id = #{websiteId}
+        </if>
+        <if test="title != null">
+            and match(title) against(#{title});
+        </if>
+    </select>
+</mapper>
