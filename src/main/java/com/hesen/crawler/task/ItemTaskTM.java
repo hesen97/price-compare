@@ -1,8 +1,5 @@
 package com.hesen.crawler.task;
 
-import com.hesen.crawler.entity.Brand;
-import com.hesen.crawler.entity.HistoryPrice;
-import com.hesen.crawler.entity.Item;
 import com.hesen.crawler.entity.Phone;
 import com.hesen.crawler.enums.Website;
 import com.hesen.crawler.service.PhoneService;
