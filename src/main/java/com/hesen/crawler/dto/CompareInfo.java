@@ -5,6 +5,15 @@ public class CompareInfo {
     private Double maxPrice;
     private Double minPrice;
     private Double averagePrice;
+    private Integer resultSum;
+
+    public Integer getResultSum() {
+        return resultSum;
+    }
+
+    public void setResultSum(Integer resultSum) {
+        this.resultSum = resultSum;
+    }
 
     public String getWebsiteName() {
         return websiteName;

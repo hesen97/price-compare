@@ -11,6 +11,8 @@ public interface PhoneDao {
 
     List<Phone> selectPhoneByCriterion(Map<String, Object> criterion);
 
+    int countPhoneByCriterion(Map<String, Object> criterion);
+
     double averagePrice(Map<String, Object> criterion);
 
     double maxPrice(Map<String, Object> criterion);

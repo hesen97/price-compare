@@ -37,32 +37,25 @@ public class PhoneServiceImpl implements PhoneService {
     @Override
     public List<CompareInfo> getCompareInfo(String searchStr) {
         List<CompareInfo> compareInfoList = new ArrayList<>();
-
-        Map<String, Object> criterionTM = new HashMap<>();
-        criterionTM.put("websiteId", Website.TM.getWebsiteId());
-        criterionTM.put("searchStr", searchStr);
-
-        CompareInfo compareInfoTM = new CompareInfo();
-        compareInfoTM.setWebsiteName(Website.TM.getWebsiteName());
-
-        compareInfoTM.setMaxPrice(phoneDao.maxPrice(criterionTM));
-        compareInfoTM.setMinPrice(phoneDao.minPrice(criterionTM));
-        compareInfoTM.setAveragePrice(phoneDao.averagePrice(criterionTM));
-
-        Map<String, Object> criterionJD = new HashMap<>();
-        criterionTM.put("websiteId", Website.JD.getWebsiteId());
-        criterionTM.put("searchStr", searchStr);
-
-        CompareInfo compareInfoJD = new CompareInfo();
-        compareInfoJD.setWebsiteName(Website.JD.getWebsiteName());
-
-        compareInfoJD.setMaxPrice(phoneDao.maxPrice(criterionJD));
-        compareInfoJD.setMinPrice(phoneDao.minPrice(criterionJD));
-        compareInfoJD.setAveragePrice(phoneDao.averagePrice(criterionJD));
-
-        compareInfoList.add(compareInfoTM);
-        compareInfoList.add(compareInfoJD);
+        for (Website website : Website.values()) {
+            compareInfoList.add(getCompareInfoHelper(searchStr, website));
+        }
         return compareInfoList;
+    }
+
+    private CompareInfo getCompareInfoHelper(String searchStr, Website website) {
+        Map<String, Object> criterion = new HashMap<>();
+        criterion.put("websiteId", website.getWebsiteId());
+        criterion.put("searchStr", searchStr);
+
+        CompareInfo compareInfo = new CompareInfo();
+        compareInfo.setWebsiteName(website.getWebsiteName());
+
+        compareInfo.setMaxPrice(phoneDao.maxPrice(criterion));
+        compareInfo.setMinPrice(phoneDao.minPrice(criterion));
+        compareInfo.setAveragePrice(phoneDao.averagePrice(criterion));
+        compareInfo.setResultSum(phoneDao.countPhoneByCriterion(criterion));
+        return compareInfo;
     }
 
     @Override

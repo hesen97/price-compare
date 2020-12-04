@@ -35,7 +35,6 @@ public class PhoneController {
 
         mav.addObject("compareInfoList", compareInfoList);
         mav.addObject("searchStr", searchStr);
-        mav.addObject("resultSize", compareInfoList.size());
         mav.setViewName("main");
         return mav;
     }

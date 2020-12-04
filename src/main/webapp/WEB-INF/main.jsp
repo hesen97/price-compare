@@ -88,9 +88,10 @@
                         </c:forEach>
                     </tr>
                     <tr class="warning">
-                        <td>方差</td>
-                        <td></td>
-                        <td></td>
+                        <td>搜索结果数</td>
+                        <c:forEach var="compareInfo" items="${compareInfoList}">
+                            <td>${compareInfo.resultSum}</td>
+                        </c:forEach>
                     </tr>
                     </tbody>
                 </table>

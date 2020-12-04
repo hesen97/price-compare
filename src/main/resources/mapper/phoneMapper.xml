@@ -16,7 +16,19 @@
         <if test="websiteId != null">
             and website_id = #{websiteId}
         </if>
-        <if test="title != null">
+        <if test="searchStr != null">
+            and match(title) against(#{searchStr});
+        </if>
+    </select>
+
+    <select id="countPhoneByCriterion" resultType="int">
+        select count(*)
+        from tb_phone
+        where price > 800
+        <if test="websiteId != null">
+            and website_id = #{websiteId}
+        </if>
+        <if test="searchStr != null">
             and match(title) against(#{searchStr});
         </if>
     </select>
@@ -28,7 +40,7 @@
         <if test="websiteId != null">
             and website_id = #{websiteId}
         </if>
-        <if test="title != null">
+        <if test="searchStr != null">
             and match(title) against(#{searchStr});
         </if>
     </select>
@@ -40,7 +52,7 @@
         <if test="websiteId != null">
             and website_id = #{websiteId}
         </if>
-        <if test="title != null">
+        <if test="searchStr != null">
             and match(title) against(#{searchStr});
         </if>
     </select>
@@ -52,7 +64,7 @@
         <if test="websiteId != null">
             and website_id = #{websiteId}
         </if>
-        <if test="title != null">
+        <if test="searchStr != null">
             and match(title) against(#{searchStr});
         </if>
     </select>
