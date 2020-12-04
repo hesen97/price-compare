@@ -29,37 +29,6 @@ public class ItemTaskJD {
     private static final int pages = 4;
 
     public void itemTask() throws Exception {
-//        // 声明需要解析的初始地址
-//        String url = "https://search.jd.com/Search?keyword=%E6%89%8B%E6%9C%BA&enc=utf-8" +
-//                "&pvid=f112521d94c04007826aa41adcbb0658";
-//
-//        String html = httpUtils.doGetHtml(url);
-//        Document doc = Jsoup.parse(html);
-//
-//
-//        List<Brand> brandList = brandService.getBrandList();
-//        Map<String, Integer> brandNameIdMap = new HashMap<>();
-//        for (Brand brand : brandList) {
-//            brandNameIdMap.put(brand.getBrandName(), brand.getBrandId());
-//        }
-//
-//        int visitedSum = 0;
-//        Elements valueListElem = doc.select("#J_selector ul.J_valueList > li");
-//        for (Element elem : valueListElem) {
-//            if (visitedSum == brandList.size()) {
-//                break;
-//            }
-//
-//            String brandName = elem.select("a").text().trim();
-//            if (brandNameIdMap.containsKey(brandName)) {
-//                String brandUrl = "https://search.jd.com/" + elem.select("a").attr("href");
-//                String brandHtml = httpUtils.doGetHtml(brandUrl);
-//                parse(brandHtml, brandNameIdMap.get(brandName));
-//                ++visitedSum;
-//            }
-//        }
-//
-//        System.out.println("done!");
 
         String[] urlArray = new String[] {
                 //小米

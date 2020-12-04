@@ -36,30 +36,16 @@ public class PhoneServiceImpl implements PhoneService {
 
     @Override
     public List<Phone> searchPhoneWithAccuracy(int websiteId, String searchStr, Accuracy accuracy) {
-        Map<String, Object> criterion = new HashMap<>();
-        criterion.put("websiteId", websiteId);
-        criterion.put("searchStr", searchStr);
-
-        int originalNum = phoneDao.countPhoneByCriterion(criterion);
-        if (originalNum == 0) {
+        double[] bound = getBound(websiteId, searchStr, accuracy);
+        if (bound == null) {
             return new ArrayList<>();
         }
 
-        int sampleNum = (int) (originalNum * 0.1);
-        criterion.put("limit", sampleNum);
-        List<Phone> samplePhoneList = phoneDao.selectPhoneByCriterion(criterion);
-
-        double samplePriceSum = 0;
-        for (Phone phone : samplePhoneList) {
-            samplePriceSum += phone.getPrice();
-        }
-        double standardPrice = samplePriceSum / sampleNum;
-        double lowerBound = standardPrice * (1.0 - accuracy.getValue());
-        double upperBound = standardPrice * (1.0 + accuracy.getValue());
-
-        criterion.put("limit", null);
-        criterion.put("lowerBound", lowerBound);
-        criterion.put("upperBound", upperBound);
+        Map<String, Object> criterion = new HashMap<>();
+        criterion.put("websiteId", websiteId);
+        criterion.put("searchStr", searchStr);
+        criterion.put("lowerBound", bound[0]);
+        criterion.put("upperBound", bound[1]);
 
         return phoneDao.selectPhoneByCriterion(criterion);
     }
@@ -104,34 +90,20 @@ public class PhoneServiceImpl implements PhoneService {
     }
 
     private CompareInfo getCompareInfoWithAccuracyHelper(String searchStr, Accuracy accuracy,  Website website) {
-        Map<String, Object> criterion = new HashMap<>();
-        criterion.put("websiteId", website.getWebsiteId());
-        criterion.put("searchStr", searchStr);
-
         CompareInfo compareInfo = new CompareInfo();
         compareInfo.setWebsiteName(website.getWebsiteName());
 
-        int originalNum = phoneDao.countPhoneByCriterion(criterion);
-        if (originalNum == 0) {
-            compareInfo.setResultSum(originalNum);
+        double[] bound = getBound(website.getWebsiteId(), searchStr, accuracy);
+        if (bound == null) {
+            compareInfo.setResultSum(0);
             return compareInfo;
         }
 
-        int sampleNum = (int) (originalNum * 0.1);
-        criterion.put("limit", sampleNum);
-        List<Phone> samplePhoneList = phoneDao.selectPhoneByCriterion(criterion);
-
-        double samplePriceSum = 0;
-        for (Phone phone : samplePhoneList) {
-            samplePriceSum += phone.getPrice();
-        }
-        double standardPrice = samplePriceSum / sampleNum;
-        double lowerBound = standardPrice * (1.0 - accuracy.getValue());
-        double upperBound = standardPrice * (1.0 + accuracy.getValue());
-
-        criterion.put("limit", null);
-        criterion.put("lowerBound", lowerBound);
-        criterion.put("upperBound", upperBound);
+        Map<String, Object> criterion = new HashMap<>();
+        criterion.put("websiteId", website.getWebsiteId());
+        criterion.put("searchStr", searchStr);
+        criterion.put("lowerBound", bound[0]);
+        criterion.put("upperBound", bound[1]);
 
         compareInfo.setResultSum(phoneDao.countPhoneByCriterion(criterion));
         compareInfo.setMaxPrice(phoneDao.maxPrice(criterion));
@@ -140,4 +112,29 @@ public class PhoneServiceImpl implements PhoneService {
         return compareInfo;
     }
 
+    private double[] getBound(int websiteId, String searchStr, Accuracy accuracy) {
+        Map<String, Object> criterion = new HashMap<>();
+        criterion.put("websiteId", websiteId);
+        criterion.put("searchStr", searchStr);
+
+        int originalNum = phoneDao.countPhoneByCriterion(criterion);
+        if (originalNum == 0) {
+            return null;
+        }
+
+        int sampleNum = (int) (originalNum * 0.1);
+        criterion.put("limit", sampleNum);
+
+        List<Phone> samplePhoneList = phoneDao.selectPhoneByCriterion(criterion);
+        double samplePriceSum = 0;
+        for (Phone phone : samplePhoneList) {
+            samplePriceSum += phone.getPrice();
+        }
+        double standardPrice = samplePriceSum / sampleNum;
+
+        double[] bound = new double[2];
+        bound[0] = standardPrice * (1.0 - accuracy.getValue());
+        bound[1] = standardPrice * (1.0 + accuracy.getValue());
+        return bound;
+    }
 }
