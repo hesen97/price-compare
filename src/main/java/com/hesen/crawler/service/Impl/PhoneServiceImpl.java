@@ -3,6 +3,7 @@ package com.hesen.crawler.service.Impl;
 import com.hesen.crawler.dao.PhoneDao;
 import com.hesen.crawler.dto.CompareInfo;
 import com.hesen.crawler.entity.Phone;
+import com.hesen.crawler.enums.Accuracy;
 import com.hesen.crawler.enums.Website;
 import com.hesen.crawler.service.PhoneService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,17 @@ public class PhoneServiceImpl implements PhoneService {
         compareInfoList.add(compareInfoTM);
         compareInfoList.add(compareInfoJD);
         return compareInfoList;
+    }
+
+    @Override
+    public List<CompareInfo> getCompareInfoWithAccuracy(String searchStr, Accuracy accuracy) {
+//        List<Phone> originalPhoneList = phoneDao.selectPhoneByCriterion()
+//        int sampleSum = (int) (originalCompareInfoList.size() * 0.1);
+//        double samplePriceSum = 0;
+//        for (int i = 0; i < sampleSum; i++) {
+//            samplePriceSum += originalCompareInfoList.get(i)
+//        }
+        return null;
     }
 
 }

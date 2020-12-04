@@ -2,6 +2,7 @@ package com.hesen.crawler.web;
 
 import com.hesen.crawler.dto.CompareInfo;
 import com.hesen.crawler.entity.Phone;
+import com.hesen.crawler.enums.Accuracy;
 import com.hesen.crawler.service.PhoneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,11 +22,19 @@ public class PhoneController {
     private PhoneService phoneService;
 
     @RequestMapping(value = "/compareInfo", method = RequestMethod.POST)
-    public ModelAndView getCompareInfo(String searchStr) {
+    public ModelAndView getCompareInfo(String searchStr, int accuracyLevel) {
         ModelAndView mav = new ModelAndView();
-        List<CompareInfo> compareInfoList =  phoneService.getCompareInfo(searchStr);
+        List<CompareInfo> compareInfoList = null;
+        Accuracy accuracy = Accuracy.getInstanceByLevel(accuracyLevel);
+        if (accuracy == Accuracy.UNDEFINE) {
+            compareInfoList =  phoneService.getCompareInfo(searchStr);
+        } else {
+            compareInfoList = phoneService.getCompareInfoWithAccuracy(searchStr, accuracy);
+        }
+
         mav.addObject("compareInfoList", compareInfoList);
         mav.addObject("searchStr", searchStr);
+        mav.addObject("resultSize", compareInfoList.size());
         mav.setViewName("main");
         return mav;
     }
@@ -41,6 +50,7 @@ public class PhoneController {
         } catch (Exception e) {
             modalMap.put("errorMsg", "获取商品信息失败");
             modalMap.put("success", false);
+            e.printStackTrace();
         }
         return modalMap;
     }
