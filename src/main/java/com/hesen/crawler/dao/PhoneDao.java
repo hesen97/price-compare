@@ -3,16 +3,17 @@ package com.hesen.crawler.dao;
 import com.hesen.crawler.entity.Phone;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PhoneDao {
 
     int insertPhone(Phone phone);
 
-    List<Phone> selectPhoneByCriterion(Phone phone);
+    List<Phone> selectPhoneByCriterion(Map<String, Object> criterion);
 
-    double averagePrice(Phone criterion);
+    double averagePrice(Map<String, Object> criterion);
 
-    double maxPrice(Phone criterion);
+    double maxPrice(Map<String, Object> criterion);
 
-    double minPrice(Phone criterion);
+    double minPrice(Map<String, Object> criterion);
 }

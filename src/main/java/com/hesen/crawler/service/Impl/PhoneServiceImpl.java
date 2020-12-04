@@ -8,9 +8,12 @@ import com.hesen.crawler.enums.Website;
 import com.hesen.crawler.service.PhoneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.rmi.transport.ObjectTable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PhoneServiceImpl implements PhoneService {
@@ -25,19 +28,19 @@ public class PhoneServiceImpl implements PhoneService {
 
     @Override
     public List<Phone> searchPhone(int websiteId, String searchStr) {
-        Phone phone = new Phone();
-        phone.setWebsiteId(websiteId);
-        phone.setTitle(searchStr);
-        return phoneDao.selectPhoneByCriterion(phone);
+        Map<String, Object> criterion = new HashMap<>();
+        criterion.put("websiteId", websiteId);
+        criterion.put("searchStr", searchStr);
+        return phoneDao.selectPhoneByCriterion(criterion);
     }
 
     @Override
     public List<CompareInfo> getCompareInfo(String searchStr) {
         List<CompareInfo> compareInfoList = new ArrayList<>();
 
-        Phone criterionTM = new Phone();
-        criterionTM.setWebsiteId(Website.TM.getWebsiteId());
-        criterionTM.setTitle(searchStr);
+        Map<String, Object> criterionTM = new HashMap<>();
+        criterionTM.put("websiteId", Website.TM.getWebsiteId());
+        criterionTM.put("searchStr", searchStr);
 
         CompareInfo compareInfoTM = new CompareInfo();
         compareInfoTM.setWebsiteName(Website.TM.getWebsiteName());
@@ -46,9 +49,10 @@ public class PhoneServiceImpl implements PhoneService {
         compareInfoTM.setMinPrice(phoneDao.minPrice(criterionTM));
         compareInfoTM.setAveragePrice(phoneDao.averagePrice(criterionTM));
 
-        Phone criterionJD = new Phone();
-        criterionJD.setTitle(searchStr);
-        criterionJD.setWebsiteId(Website.JD.getWebsiteId());
+        Map<String, Object> criterionJD = new HashMap<>();
+        criterionTM.put("websiteId", Website.JD.getWebsiteId());
+        criterionTM.put("searchStr", searchStr);
+
         CompareInfo compareInfoJD = new CompareInfo();
         compareInfoJD.setWebsiteName(Website.JD.getWebsiteName());
 

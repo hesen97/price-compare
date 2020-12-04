@@ -22,9 +22,10 @@ public class PhoneController {
     private PhoneService phoneService;
 
     @RequestMapping(value = "/compareInfo", method = RequestMethod.POST)
-    public ModelAndView getCompareInfo(String searchStr, int accuracyLevel) {
+    public ModelAndView getCompareInfo(String searchStr) {
         ModelAndView mav = new ModelAndView();
         List<CompareInfo> compareInfoList = null;
+        int accuracyLevel = 0;
         Accuracy accuracy = Accuracy.getInstanceByLevel(accuracyLevel);
         if (accuracy == Accuracy.UNDEFINE) {
             compareInfoList =  phoneService.getCompareInfo(searchStr);

@@ -17,7 +17,7 @@
             and website_id = #{websiteId}
         </if>
         <if test="title != null">
-            and match(title) against(#{title});
+            and match(title) against(#{searchStr});
         </if>
     </select>
 
@@ -29,7 +29,7 @@
             and website_id = #{websiteId}
         </if>
         <if test="title != null">
-            and match(title) against(#{title});
+            and match(title) against(#{searchStr});
         </if>
     </select>
 
@@ -41,7 +41,7 @@
             and website_id = #{websiteId}
         </if>
         <if test="title != null">
-            and match(title) against(#{title});
+            and match(title) against(#{searchStr});
         </if>
     </select>
 
@@ -53,7 +53,7 @@
             and website_id = #{websiteId}
         </if>
         <if test="title != null">
-            and match(title) against(#{title});
+            and match(title) against(#{searchStr});
         </if>
     </select>
 </mapper>
