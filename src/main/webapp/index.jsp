@@ -22,6 +22,14 @@
                 <label class="control-label">请输入你要查询的手机：</label>
                 <input name="searchStr" type="text" class="form-control" placeholder="Search">
             </div>
+            <div class="form-group">
+                <select class="form-control" name="accuracyLevel">
+                    <option value="0" selected>普通查询</option>
+                    <option value="1">一般精准</option>
+                    <option value="2">比较精准</option>
+                    <option value="3">非常精准</option>
+                </select>
+            </div>
             <button type="submit" class="btn btn-primary">查询</button>
         </form>
     </div>

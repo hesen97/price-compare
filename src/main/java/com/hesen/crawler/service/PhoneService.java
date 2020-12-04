@@ -13,6 +13,8 @@ public interface PhoneService {
 
     List<Phone> searchPhone(int websiteId, String searchStr);
 
+    List<Phone> searchPhoneWithAccuracy(int websiteId, String searchStr, Accuracy accuracy);
+
     List<CompareInfo> getCompareInfo(String searchStr);
 
     List<CompareInfo> getCompareInfoWithAccuracy(String search, Accuracy accuracy);

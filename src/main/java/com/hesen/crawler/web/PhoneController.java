@@ -22,29 +22,34 @@ public class PhoneController {
     private PhoneService phoneService;
 
     @RequestMapping(value = "/compareInfo", method = RequestMethod.POST)
-    public ModelAndView getCompareInfo(String searchStr) {
+    public ModelAndView getCompareInfo(String searchStr, int accuracyLevel) {
         ModelAndView mav = new ModelAndView();
         List<CompareInfo> compareInfoList = null;
-        int accuracyLevel = 0;
         Accuracy accuracy = Accuracy.getInstanceByLevel(accuracyLevel);
         if (accuracy == Accuracy.UNDEFINE) {
             compareInfoList =  phoneService.getCompareInfo(searchStr);
         } else {
             compareInfoList = phoneService.getCompareInfoWithAccuracy(searchStr, accuracy);
         }
-
         mav.addObject("compareInfoList", compareInfoList);
         mav.addObject("searchStr", searchStr);
+        mav.addObject("accuracyLevel", accuracyLevel);
         mav.setViewName("main");
         return mav;
     }
 
     @RequestMapping(value = "/phones", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> getPhones(int websiteId, String searchStr) {
+    public Map<String, Object> getPhones(int websiteId, String searchStr, int accuracyLevel) {
         Map<String, Object> modalMap = new HashMap<>();
         try {
-            List<Phone> phoneList = phoneService.searchPhone(websiteId, searchStr);
+            List<Phone> phoneList = null;
+            Accuracy accuracy = Accuracy.getInstanceByLevel(accuracyLevel);
+            if (accuracy == Accuracy.UNDEFINE) {
+                phoneList = phoneService.searchPhone(websiteId, searchStr);
+            } else {
+                phoneList = phoneService.searchPhoneWithAccuracy(websiteId, searchStr, accuracy);
+            }
             modalMap.put("phoneList", phoneList);
             modalMap.put("success", true);
         } catch (Exception e) {

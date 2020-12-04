@@ -17,7 +17,13 @@
             and website_id = #{websiteId}
         </if>
         <if test="searchStr != null">
-            and match(title) against(#{searchStr});
+            and match(title) against(#{searchStr})
+        </if>
+        <if test="lowerBound != null and upperBound != null">
+            and price between #{lowerBound} and #{upperBound}
+        </if>
+        <if test="limit != null">
+            limit #{limit}
         </if>
     </select>
 
@@ -29,7 +35,10 @@
             and website_id = #{websiteId}
         </if>
         <if test="searchStr != null">
-            and match(title) against(#{searchStr});
+            and match(title) against(#{searchStr})
+        </if>
+        <if test="lowerBound != null and upperBound != null">
+            and price between #{lowerBound} and #{upperBound}
         </if>
     </select>
 
@@ -41,7 +50,10 @@
             and website_id = #{websiteId}
         </if>
         <if test="searchStr != null">
-            and match(title) against(#{searchStr});
+            and match(title) against(#{searchStr})
+        </if>
+        <if test="lowerBound != null and upperBound != null">
+            and price between #{lowerBound} and #{upperBound}
         </if>
     </select>
 
@@ -53,7 +65,10 @@
             and website_id = #{websiteId}
         </if>
         <if test="searchStr != null">
-            and match(title) against(#{searchStr});
+            and match(title) against(#{searchStr})
+        </if>
+        <if test="lowerBound != null and upperBound != null">
+            and price between #{lowerBound} and #{upperBound}
         </if>
     </select>
 
@@ -65,7 +80,10 @@
             and website_id = #{websiteId}
         </if>
         <if test="searchStr != null">
-            and match(title) against(#{searchStr});
+            and match(title) against(#{searchStr})
+        </if>
+        <if test="lowerBound != null and upperBound != null">
+            and price between #{lowerBound} and #{upperBound}
         </if>
     </select>
 </mapper>

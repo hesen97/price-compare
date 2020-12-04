@@ -49,6 +49,14 @@
                             <div class="form-group">
                                 <input type="text" name="searchStr" class="form-control" placeholder="Search" id="search-input">
                             </div>
+                            <div class="form-group">
+                                <select class="form-control" name="accuracyLevel" id="search-select">
+                                    <option value="0" selected>普通查询</option>
+                                    <option value="1">一般精准</option>
+                                    <option value="2">比较精准</option>
+                                    <option value="3">非常精准</option>
+                                </select>
+                            </div>
                             <button type="submit" class="btn btn-primary">查询</button>
                         </form>
                     </div><!-- /.navbar-collapse -->
@@ -112,6 +120,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $("#search-select").val(${accuracyLevel});
         $("#search-input").val("${searchStr}");
     });
 </script>

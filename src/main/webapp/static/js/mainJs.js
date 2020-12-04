@@ -3,12 +3,13 @@ $(document).ready(function() {
     function init() {
         var websiteId = 1;
         var searchStr = $("#search-input").val();
-        show_phones_on_panel(websiteId, searchStr);
+        var accuracyLevel = $("#search-select").val();
+        show_phones_on_panel(websiteId, searchStr, accuracyLevel);
     }
 
-    function show_phones_on_panel(websiteId, searchStr) {
+    function show_phones_on_panel(websiteId, searchStr, accuracyLevel) {
         $.ajax({
-            url: "/crawler2/phones?websiteId=" + websiteId + "&searchStr=" + searchStr,
+            url: "/crawler2/phones?websiteId=" + websiteId + "&searchStr=" + searchStr + "&accuracyLevel=" + accuracyLevel,
             type: "GET",
             success: function(result) {
                 if (result.success) {
@@ -58,7 +59,8 @@ $(document).ready(function() {
 
         var websiteId = 1;
         var searchStr = $("#search-input").val();
-        show_phones_on_panel(websiteId, searchStr);
+        var accuracyLevel = $("#search-select").val();
+        show_phones_on_panel(websiteId, searchStr, accuracyLevel);
     })
 
     $("#website-JD").click(function() {
@@ -67,6 +69,7 @@ $(document).ready(function() {
 
         var websiteId = 2;
         var searchStr = $("#search-input").val();
-        show_phones_on_panel(websiteId, searchStr);
+        var accuracyLevel = $("#search-select").val();
+        show_phones_on_panel(websiteId, searchStr, accuracyLevel);
     })
 });
